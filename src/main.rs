@@ -2,6 +2,7 @@ use clap::Parser;
 use notify_rust::Notification;
 use std::process::Command;
 use std::process::Stdio;
+use which::which;
 use wl_clipboard_rs::copy::{MimeType, Options, Source};
 
 /// A simple color picker wrapper for hyprpicker
@@ -17,6 +18,10 @@ struct Args {
     clipboard: bool,
 }
 
+// TODO: Check if hyprpicker exists in the $PATH
+fn check_bin() -> bool {
+    which("hyprpicker").unwrap();
+}
 fn main() {
     let args = Args::parse();
     let proc = Command::new("hyprpicker")
