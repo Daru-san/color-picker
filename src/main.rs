@@ -67,6 +67,8 @@ fn notify(message: String) {
     let run = Notification::new()
         .summary("Color Picker")
         .body(&message)
+        .appname("Color Picker")
+        .auto_icon()
         .show();
     drop(run);
 }
