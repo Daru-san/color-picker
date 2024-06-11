@@ -18,10 +18,10 @@ struct Args {
     clipboard: bool,
 }
 
-// TODO: Check if hyprpicker exists in the $PATH
-fn check_bin() -> bool {
-    which("hyprpicker").unwrap();
-}
+// // TODO: Check if hyprpicker exists in the $PATH
+// fn check_bin() -> bool {
+//     which("hyprpicker").unwrap();
+// }
 fn main() {
     let args = Args::parse();
     let proc = Command::new("hyprpicker")
@@ -36,7 +36,7 @@ fn main() {
     );
     let notify = Notification::new()
         .summary("Color Picker")
-        .body(("Copied {} to clipboard", color))
+        .body((&color))
         .show();
 
     println!("{}", color);
