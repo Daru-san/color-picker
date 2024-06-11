@@ -1,5 +1,6 @@
 [package]
 name = "color-picker-rs"
+author = "daru"
 version = "0.1.0"
 edition = "2021"
 
