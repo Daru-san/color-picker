@@ -300,6 +300,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4b82cf0babdbd58558212896d1a4272303a57bdb245c2bf1147185fb45640e70"
 
 [[package]]
+name = "color-picker-rs"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "notify-rust",
+ "which",
+ "wl-clipboard-rs",
+]
+
+[[package]]
 name = "colorchoice"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1072,16 +1082,6 @@ dependencies = [
  "fastrand",
  "rustix",
  "windows-sys",
-]
-
-[[package]]
-name = "template"
-version = "0.1.0"
-dependencies = [
- "clap",
- "notify-rust",
- "which",
- "wl-clipboard-rs",
 ]
 
 [[package]]
