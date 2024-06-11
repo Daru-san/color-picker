@@ -20,7 +20,7 @@
       in rec
       {
         packages.default = toolchain.buildRustPackage {
-          pname = "color-picker-rs";
+          pname = "color-picker";
           version = "0.1.0";
           src = ./.;
           cargoLock.lockFile = ./Cargo.lock;
