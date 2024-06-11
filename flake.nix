@@ -25,7 +25,7 @@
           src = ./.;
           cargoLock.lockFile = ./Cargo.lock;
           nativeBuildInputs = [pkgs.makeWrapper];
-          postIntall = ''
+          postInstall = ''
             wrapProgram $out/bin/color-picker \
               --prefix PATH : ${
               nixpkgs.lib.makeBinPath [pkgs.hyprpicker]
