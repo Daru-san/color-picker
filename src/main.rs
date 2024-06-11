@@ -43,7 +43,14 @@ fn get_color() -> String {
 
     let mut color = String::from_utf8(proc.stdout).unwrap();
     color.truncate(color.len() - 1);
+    check_color(color.clone());
     color
+}
+
+fn check_color(color: String) {
+    if color.is_empty() {
+        exit(0);
+    }
 }
 
 fn copy_to_clipboard(color: String) {
