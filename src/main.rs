@@ -3,6 +3,7 @@ use notify_rust::Notification;
 use std::process::Command;
 use std::process::Stdio;
 use which::which;
+
 use wl_clipboard_rs::copy::{MimeType, Options, Source};
 
 /// A simple color picker wrapper for hyprpicker
@@ -18,10 +19,6 @@ struct Args {
     clipboard: bool,
 }
 
-// // TODO: Check if hyprpicker exists in the $PATH
-// fn check_bin() -> bool {
-//     which("hyprpicker").unwrap();
-// }
 fn main() {
     let args = Args::parse();
     let proc = Command::new("hyprpicker")
@@ -36,15 +33,15 @@ fn main() {
     );
     let notify = Notification::new()
         .summary("Color Picker")
-        .body((&color))
+        .body(&color)
         .show();
 
     println!("{}", color);
-    if args.clipboard == true {
-        copy_to_clipboard;
+    if args.clipboard {
+        drop(copy_to_clipboard);
         println!("Color {} successfully copied to your clipboard!", color);
     }
     if args.notify {
-        notify;
+        drop(notify);
     }
 }
