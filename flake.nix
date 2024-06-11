@@ -24,7 +24,13 @@
           version = "0.1.0";
           src = ./.;
           cargoLock.lockFile = ./Cargo.lock;
-          buildInputs = [pkgs.hyprpicker];
+          nativeBuildInputs = [pkgs.makeWrapper];
+          postIntall = ''
+            wrapProgram $out/bin/color-picker \
+              --prefix PATH : ${
+              nixpkgs.lib.makeBinPath [pkgs.hyprpicker]
+            }
+          '';
         };
 
         apps.default = utils.lib.mkApp {drv = packages.default;};
