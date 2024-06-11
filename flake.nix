@@ -34,6 +34,7 @@
               rustc
               rustLibSrc
             ])
+            hyprpicker
             clippy
             rustfmt
             pkg-config
