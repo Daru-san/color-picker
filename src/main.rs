@@ -1,5 +1,6 @@
 use clap::Parser;
 use notify_rust::Notification;
+use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
 
@@ -8,31 +9,54 @@ use wl_clipboard_rs::copy::{MimeType, Options, Source};
 /// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
 #[command(author,version,about,long_about = None)]
-struct Args {}
+struct Args {
+    #[arg(short, long)]
+    usage: bool,
+}
 
-fn main() {
+fn get_color() -> String {
     let proc = Command::new("hyprpicker")
         .stdout(Stdio::piped())
         .output()
         .unwrap();
 
-    let color = String::from_utf8(proc.stdout).unwrap();
+    let mut color = String::from_utf8(proc.stdout).unwrap();
+    color.truncate(color.len() - 1);
+    color
+}
 
-    let opts = Options::new();
+fn copy_to_clipboard(color: String) {
+    let clipboard = Options::new();
 
-    let copy_to_clipboard = opts.copy(
+    let run = clipboard.copy(
         Source::Bytes(color.to_string().into_bytes().into()),
         MimeType::Autodetect,
     );
+    drop(run);
+}
 
-    let message = color + " has been copied to your clipboard";
-
-    let notify = Notification::new()
+fn notify(message: String) {
+    let run = Notification::new()
         .summary("Color Picker")
         .body(&message)
         .show();
+    drop(run);
+}
+
+fn print_usage() {
+    println!("Just run `color-picker` and it will copy the selected color to your clipboard");
+    exit(0);
+}
+
+fn main() {
+    let color = get_color();
+    let message = format!("{:?} has been copied to your clipboard", color);
+    let args = Args::parse();
+    if args.usage {
+        print_usage();
+    }
 
     println!("{}", message);
-    drop(copy_to_clipboard);
-    drop(notify);
+    copy_to_clipboard(color);
+    notify(message);
 }
