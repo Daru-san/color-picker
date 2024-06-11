@@ -14,6 +14,27 @@ struct Args {
     usage: bool,
 }
 
+fn main() {
+    get_args();
+    let color = get_color();
+    let message = format!("{:?} has been copied to your clipboard", color);
+
+    println!("{}", message);
+    copy_to_clipboard(color);
+    notify(message);
+}
+
+fn get_args() {
+    let args = Args::parse();
+    if args.usage {
+        print_usage();
+    }
+}
+
+fn print_usage() {
+    println!("Just run `color-picker` and it will copy the selected color to your clipboard");
+    exit(0);
+}
 fn get_color() -> String {
     let proc = Command::new("hyprpicker")
         .stdout(Stdio::piped())
@@ -41,22 +62,4 @@ fn notify(message: String) {
         .body(&message)
         .show();
     drop(run);
-}
-
-fn print_usage() {
-    println!("Just run `color-picker` and it will copy the selected color to your clipboard");
-    exit(0);
-}
-
-fn main() {
-    let color = get_color();
-    let message = format!("{:?} has been copied to your clipboard", color);
-    let args = Args::parse();
-    if args.usage {
-        print_usage();
-    }
-
-    println!("{}", message);
-    copy_to_clipboard(color);
-    notify(message);
 }
