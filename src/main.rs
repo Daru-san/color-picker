@@ -68,7 +68,6 @@ fn notify(message: String) {
         .summary("Color Picker")
         .body(&message)
         .appname("Color Picker")
-        .auto_icon()
         .show();
     drop(run);
 }
