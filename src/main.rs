@@ -2,7 +2,6 @@ use clap::Parser;
 use notify_rust::Notification;
 use std::process::Command;
 use std::process::Stdio;
-use which::which;
 
 use wl_clipboard_rs::copy::{MimeType, Options, Source};
 
