@@ -4,12 +4,15 @@ use std::process::Command;
 use std::process::Stdio;
 use wl_clipboard_rs::copy::{MimeType, Options, Source};
 
+/// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
 #[command(version,about,long_about = None)]
 struct Args {
+    /// Notify the user when picking the color
     #[arg(short, long)]
     notify: bool,
 
+    /// Copy the color to the system clipboard
     #[arg(short, long)]
     clipboard: bool,
 }
