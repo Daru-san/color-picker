@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 clap = { version = "4.5.7", features = ["derive"] }
 notify-rust = "4.11.0"
+wl-clipboard-rs = "0.8.1"
