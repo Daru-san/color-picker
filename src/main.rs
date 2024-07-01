@@ -3,6 +3,7 @@ use notify_rust::Notification;
 use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
+use std::str::FromStr;
 
 use wl_clipboard_rs::copy::{MimeType, Options, Source};
 
@@ -21,7 +22,10 @@ struct Args {
 
 fn main() {
     get_args();
-    let color = get_color();
+
+    let color_format = get_format();
+    let color = get_color(color_format);
+
     let message = format!("{:?} has been copied to your clipboard", color);
 
     println!("{}", message);
@@ -34,22 +38,42 @@ fn get_args() {
     if args.usage {
         print_usage();
     }
-    if !args.format.is_empty() {
-        formatting(args.format.to_string())
+}
+
+fn get_format() -> String {
+    let args = Args::parse();
+
+    let format = args.format;
+
+    let available_formats: String = "hex, hsl, hsv, rgb or cmyk".to_string();
+
+    let converted_format: &str = &String::from_str(&format).unwrap();
+
+    let is_correct = matches!(converted_format, "hex" | "hsl" | "hsv" | "rgb" | "cmyk");
+
+    if is_correct {
+        format
+    } else {
+        print_format_error(format, available_formats);
+        exit(404)
     }
 }
 
-//TODO: Get formatting done
-fn formatting(format: String) {
-    if format == "hex" {}
+fn print_format_error(incorrect_format: String, available_formats: String) {
+    println!(
+        "The format {:?} is invalid, please use one of: \n{:?}",
+        incorrect_format, available_formats
+    );
 }
 
 fn print_usage() {
     println!("Just run `color-picker` and it will copy the selected color to your clipboard");
     exit(0);
 }
-fn get_color() -> String {
+fn get_color(color_format: String) -> String {
     let proc = Command::new("hyprpicker")
+        .arg("-f")
+        .arg(color_format)
         .stdout(Stdio::piped())
         .output()
         .unwrap();
