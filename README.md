@@ -27,7 +27,7 @@ color-picker
 
 ## Installation
 
-### On other distrobutions
+### On other distributions
 
 ```sh
 git clone https://github.com/Daru-san/color-picker
