@@ -13,6 +13,10 @@ struct Args {
     /// Get a tutorial on how to use
     #[arg(short, long)]
     usage: bool,
+
+    /// The output format of the color
+    #[arg(short, long, default_value = "hex")]
+    format: String,
 }
 
 fn main() {
@@ -30,6 +34,14 @@ fn get_args() {
     if args.usage {
         print_usage();
     }
+    if !args.format.is_empty() {
+        formatting(args.format.to_string())
+    }
+}
+
+//TODO: Get formatting done
+fn formatting(format: String) {
+    if format == "hex" {}
 }
 
 fn print_usage() {
