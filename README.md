@@ -14,7 +14,8 @@ A simple color picker wrapper for hyprpicker
 Usage: color-picker [OPTIONS]
 
 Options:
-  -u, --usage
+  -u, --usage    Get a small tutorial on how to run
+  -f, --format   The format of the color output, one of hsv, hex, hsl, cmyk and rgb
   -h, --help     Print help
   -V, --version  Print version
 ```
@@ -23,6 +24,12 @@ Just run this and let it work it's magick!
 
 ```bash
 color-picker
+```
+
+If you hope to use different formats e.g hsv, run
+
+```bash
+color-picker -f hsv
 ```
 
 ## Installation
