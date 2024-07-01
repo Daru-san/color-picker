@@ -57,18 +57,18 @@ fn check_color(color: String) {
 fn copy_to_clipboard(color: String) {
     let clipboard = Options::new();
 
-    let run = clipboard.copy(
+    let copy = clipboard.copy(
         Source::Bytes(color.to_string().into_bytes().into()),
         MimeType::Autodetect,
     );
-    drop(run);
+    drop(copy);
 }
 
 fn notify(message: String) {
-    let run = Notification::new()
+    let notify = Notification::new()
         .summary("Color Picker")
         .body(&message)
         .appname("Color Picker")
         .show();
-    drop(run);
+    drop(notify);
 }
