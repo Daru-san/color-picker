@@ -10,6 +10,7 @@ use wl_clipboard_rs::copy::{MimeType, Options, Source};
 #[derive(Parser, Debug)]
 #[command(author,version,about,long_about = None)]
 struct Args {
+    /// Get a tutorial on how to use
     #[arg(short, long)]
     usage: bool,
 }
