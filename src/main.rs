@@ -2,7 +2,6 @@ use clap::Parser;
 use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
-use std::str::FromStr;
 
 mod colors;
 mod output;
@@ -65,6 +64,7 @@ fn print_usage() {
     println!("Just run `color-picker` and it will copy the selected color to your clipboard");
     exit(0);
 }
+
 fn get_color(color_format: String) -> String {
     let command = Command::new("hyprpicker")
         .arg("-f")
