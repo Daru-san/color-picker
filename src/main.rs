@@ -4,6 +4,10 @@ use std::process::Command;
 use std::process::Stdio;
 use std::str::FromStr;
 
+mod colors;
+mod output;
+
+use output::{copy_to_clipboard, notification};
 
 /// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
@@ -27,8 +31,8 @@ fn main() {
     let message = format!("{:?} has been copied to your clipboard", color);
 
     println!("{}", message);
-    copy_to_clipboard(color);
-    notify(message);
+    copy_to_clipboard::run(color);
+    notification::run(message);
 }
 
 fn get_args() {
