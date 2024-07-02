@@ -1,5 +1,4 @@
 use clap::Parser;
-use notify_rust::Notification;
 use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
@@ -87,13 +86,4 @@ fn check_color(color: String) {
     if color.is_empty() {
         exit(0);
     }
-}
-
-fn notify(message: String) {
-    let notify = Notification::new()
-        .summary("Color Picker")
-        .body(&message)
-        .appname("Color Picker")
-        .show();
-    drop(notify);
 }
