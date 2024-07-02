@@ -66,14 +66,14 @@ fn print_usage() {
     exit(0);
 }
 fn get_color(color_format: String) -> String {
-    let proc = Command::new("hyprpicker")
+    let command = Command::new("hyprpicker")
         .arg("-f")
         .arg(color_format)
         .stdout(Stdio::piped())
         .output()
         .unwrap();
 
-    let mut color = String::from_utf8(proc.stdout).unwrap();
+    let mut color = String::from_utf8(command.stdout).unwrap();
     color.truncate(color.len() - 1);
     check_color(color.clone());
     color
