@@ -5,7 +5,6 @@ use std::process::Command;
 use std::process::Stdio;
 use std::str::FromStr;
 
-use wl_clipboard_rs::copy::{MimeType, Options, Source};
 
 /// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
@@ -88,16 +87,6 @@ fn check_color(color: String) {
     if color.is_empty() {
         exit(0);
     }
-}
-
-fn copy_to_clipboard(color: String) {
-    let clipboard = Options::new();
-
-    let copy = clipboard.copy(
-        Source::Bytes(color.to_string().into_bytes().into()),
-        MimeType::Autodetect,
-    );
-    drop(copy);
 }
 
 fn notify(message: String) {
