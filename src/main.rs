@@ -6,8 +6,10 @@ use std::process::Stdio;
 mod checks;
 mod colors;
 mod output;
+mod subcommands;
 
 use output::{copy_to_clipboard, notification};
+use subcommands::usage;
 
 /// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
@@ -23,7 +25,8 @@ struct Args {
 }
 
 fn main() {
-    get_args();
+    let args = Args::parse();
+    usage::get_args(args.usage);
 
     let color_format = get_format();
     let color = get_color(color_format);
