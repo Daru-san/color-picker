@@ -1,5 +1,6 @@
 use std::env;
 use std::fs;
+use std::process::exit;
 
 fn is_program_in_path(cmd: &str) -> bool {
     if let Ok(path) = env::var("PATH") {
@@ -22,5 +23,6 @@ pub fn check() {
             "{:?} is not in your PATH, please ensure it is installed",
             cmd
         );
+        exit(101);
     }
 }
