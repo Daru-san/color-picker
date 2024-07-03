@@ -4,7 +4,7 @@ use std::process::exit;
 
 fn is_program_in_path(cmd: &str) -> bool {
     if let Ok(path) = env::var("PATH") {
-        for p in path.split(":") {
+        for p in path.split(':') {
             let p_str = format!("{}/{}", p, cmd);
             if fs::metadata(p_str).is_ok() {
                 return true;
@@ -14,10 +14,9 @@ fn is_program_in_path(cmd: &str) -> bool {
     false
 }
 
-pub fn check() {
-    let cmd = "hyprpicker";
+pub fn check_path(cmd: &str) {
     if is_program_in_path(cmd) {
-        println!("");
+        println!();
     } else {
         println!(
             "{:?} is not in your PATH, please ensure it is installed",

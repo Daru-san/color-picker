@@ -27,26 +27,11 @@ fn main() {
     usage::get_args(args.usage);
 
     let color_format = format::get_format(args.format);
+    let color = picker::get_color(color_format);
 
     let message = format!("{:?} has been copied to your clipboard", color);
 
     println!("{}", message);
     copy_to_clipboard::run(color);
     notification::run(message);
-}
-
-fn get_args() {
-    let args = Args::parse();
-    if args.usage {
-        print_usage();
-    }
-}
-
-
-fn print_usage() {
-    println!("Just run `color-picker` and it will copy the selected color to your clipboard");
-    let mut color = String::from_utf8(command.stdout).unwrap();
-    color.truncate(color.len() - 1);
-    check_color(color.clone());
-    color
 }
