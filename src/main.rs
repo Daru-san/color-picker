@@ -1,11 +1,13 @@
 use clap::Parser;
-use notify_rust::Notification;
-use std::process::exit;
-use std::process::Command;
-use std::process::Stdio;
-use std::str::FromStr;
 
-use wl_clipboard_rs::copy::{MimeType, Options, Source};
+mod checks;
+mod colors;
+mod output;
+mod subcommands;
+
+use colors::{format, picker};
+use output::{copy_to_clipboard, notification};
+use subcommands::usage;
 
 /// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
@@ -21,90 +23,15 @@ struct Args {
 }
 
 fn main() {
-    get_args();
+    let args = Args::parse();
+    usage::get_args(args.usage);
 
-    let color_format = get_format();
-    let color = get_color(color_format);
+    let color_format = format::get_format(args.format);
+    let color = picker::get_color(color_format);
 
     let message = format!("{:?} has been copied to your clipboard", color);
 
     println!("{}", message);
-    copy_to_clipboard(color);
-    notify(message);
-}
-
-fn get_args() {
-    let args = Args::parse();
-    if args.usage {
-        print_usage();
-    }
-}
-
-fn get_format() -> String {
-    let args = Args::parse();
-
-    let format = args.format;
-
-    let available_formats: String = "hex, hsl, hsv, rgb or cmyk".to_string();
-
-    let converted_format: &str = &String::from_str(&format).unwrap();
-
-    let is_correct = matches!(converted_format, "hex" | "hsl" | "hsv" | "rgb" | "cmyk");
-
-    if is_correct {
-        format
-    } else {
-        print_format_error(format, available_formats);
-        exit(404)
-    }
-}
-
-fn print_format_error(incorrect_format: String, available_formats: String) {
-    println!(
-        "The format {:?} is invalid, please use one of: \n{:?}",
-        incorrect_format, available_formats
-    );
-}
-
-fn print_usage() {
-    println!("Just run `color-picker` and it will copy the selected color to your clipboard");
-    exit(0);
-}
-fn get_color(color_format: String) -> String {
-    let proc = Command::new("hyprpicker")
-        .arg("-f")
-        .arg(color_format)
-        .stdout(Stdio::piped())
-        .output()
-        .unwrap();
-
-    let mut color = String::from_utf8(proc.stdout).unwrap();
-    color.truncate(color.len() - 1);
-    check_color(color.clone());
-    color
-}
-
-fn check_color(color: String) {
-    if color.is_empty() {
-        exit(0);
-    }
-}
-
-fn copy_to_clipboard(color: String) {
-    let clipboard = Options::new();
-
-    let copy = clipboard.copy(
-        Source::Bytes(color.to_string().into_bytes().into()),
-        MimeType::Autodetect,
-    );
-    drop(copy);
-}
-
-fn notify(message: String) {
-    let notify = Notification::new()
-        .summary("Color Picker")
-        .body(&message)
-        .appname("Color Picker")
-        .show();
-    drop(notify);
+    copy_to_clipboard::run(color);
+    notification::run(message);
 }
