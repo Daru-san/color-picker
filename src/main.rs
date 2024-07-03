@@ -3,6 +3,7 @@ use std::process::exit;
 use std::process::Command;
 use std::process::Stdio;
 
+mod checks;
 mod colors;
 mod output;
 
@@ -77,10 +78,4 @@ fn get_color(color_format: String) -> String {
     color.truncate(color.len() - 1);
     check_color(color.clone());
     color
-}
-
-fn check_color(color: String) {
-    if color.is_empty() {
-        exit(0);
-    }
 }
