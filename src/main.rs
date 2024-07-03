@@ -1,7 +1,4 @@
 use clap::Parser;
-use std::process::exit;
-use std::process::Command;
-use std::process::Stdio;
 
 mod checks;
 mod colors;
