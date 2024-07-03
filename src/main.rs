@@ -11,7 +11,7 @@ use subcommands::usage;
 
 /// A simple color picker wrapper for hyprpicker
 #[derive(Parser, Debug)]
-#[command(author,version,about,long_about = None)]
+#[command(version,about,long_about = None)]
 struct Args {
     /// Get a tutorial on how to use
     #[arg(short, long)]

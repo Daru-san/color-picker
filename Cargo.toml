@@ -1,6 +1,5 @@
 [package]
 name = "color-picker"
-author = "daru"
 version = "0.1.1"
 edition = "2021"
 
