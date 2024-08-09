@@ -44,16 +44,18 @@
 
         apps.default = utils.lib.mkApp {drv = packages.default;};
         devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
+          buildInputs = [
             (with toolchain; [
-              cargo
-              rustc
               rustLibSrc
             ])
-            hyprpicker
-            clippy
-            rustfmt
-            pkg-config
+            (with pkgs; [
+              rustc
+              cargo
+              hyprpicker
+              clippy
+              rustfmt
+              pkg-config
+            ])
           ];
 
           # Specify the rust-src path (many editors rely on this)
