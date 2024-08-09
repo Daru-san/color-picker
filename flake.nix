@@ -33,6 +33,13 @@
               makeBinPath [pkgs.hyprpicker]
             }
           '';
+          meta = {
+            description = "A simple wrapper program for hyprpicker with notifications";
+            homepage = "https://github.com/Daru-san/color-picker";
+            license = licenses.mit;
+            maintainers = [maintainers.daru-san];
+            mainProgram = "color-picker";
+          };
         };
 
         apps.default = utils.lib.mkApp {drv = packages.default;};
