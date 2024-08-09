@@ -1,5 +1,7 @@
 # color-picker
 
+[![Cachix-push](https://github.com/Daru-san/color-picker/actions/workflows/cachix.yml/badge.svg)](https://github.com/Daru-san/color-picker/actions/workflows/cachix.yml)
+
 A color picker using hyprpicker written in rust
 
 ## Dependencies
