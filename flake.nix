@@ -21,28 +21,34 @@
         toolchain = pkgs.rustPlatform;
       in rec
       {
-        packages.default = toolchain.buildRustPackage {
-          pname = "color-picker";
-          version = "0.1.2";
-          src = ./.;
-          cargoLock.lockFile = ./Cargo.lock;
-          nativeBuildInputs = [pkgs.makeWrapper];
-          postInstall = ''
-            wrapProgram $out/bin/color-picker \
-              --prefix PATH : ${
-              makeBinPath [pkgs.hyprpicker]
-            }
-          '';
-          meta = {
-            description = "A simple wrapper program for hyprpicker with notifications";
-            homepage = "https://github.com/Daru-san/color-picker";
-            license = licenses.mit;
-            maintainers = [maintainers.daru-san];
-            mainProgram = "color-picker";
+        packages = {
+          default = packages.color-picker;
+          color-picker = toolchain.buildRustPackage {
+            pname = "color-picker";
+            version = "0.1.2";
+            src = ./.;
+            cargoLock.lockFile = ./Cargo.lock;
+            nativeBuildInputs = [pkgs.makeWrapper];
+            postInstall = ''
+              wrapProgram $out/bin/color-picker \
+                --prefix PATH : ${
+                makeBinPath [pkgs.hyprpicker]
+              }
+            '';
+            meta = {
+              description = "A simple wrapper program for hyprpicker with notifications";
+              homepage = "https://github.com/Daru-san/color-picker";
+              license = licenses.mit;
+              maintainers = [maintainers.daru-san];
+              mainProgram = "color-picker";
+            };
           };
         };
         formatter = pkgs.nixfmt-rfc-style;
-        apps.default = utils.lib.mkApp {drv = packages.default;};
+        apps = {
+          default = apps.color-picker;
+          color-picker = utils.lib.mkApp {drv = packages.color-picker;};
+        };
         devShells.default = pkgs.mkShell {
           buildInputs = [
             (with toolchain; [
