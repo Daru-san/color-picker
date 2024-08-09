@@ -1,5 +1,5 @@
 {
-  description = "Color picker for wayland written in rust";
+  description = "Color picker for wayland written in rust, using hyprpicker";
 
   inputs = {
     utils.url = "github:numtide/flake-utils";
