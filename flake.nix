@@ -11,7 +11,9 @@
     nixpkgs,
     utils,
     ...
-  }:
+  }: let
+    inherit (nixpkgs.lib) makeBinPath licenses maintainers;
+  in
     utils.lib.eachDefaultSystem
     (
       system: let
@@ -28,7 +30,7 @@
           postInstall = ''
             wrapProgram $out/bin/color-picker \
               --prefix PATH : ${
-              nixpkgs.lib.makeBinPath [pkgs.hyprpicker]
+              makeBinPath [pkgs.hyprpicker]
             }
           '';
         };
