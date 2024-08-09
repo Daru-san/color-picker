@@ -41,7 +41,7 @@
             mainProgram = "color-picker";
           };
         };
-
+        formatter = pkgs.nixfmt-rfc-style;
         apps.default = utils.lib.mkApp {drv = packages.default;};
         devShells.default = pkgs.mkShell {
           buildInputs = [
